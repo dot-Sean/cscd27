@@ -81,8 +81,8 @@ def print_state(state_array, label = " "):
         psa = ""
         for row in col:
             psa += bv_hex_str(row)
-            print psa,
-    print label
+            print (psa)
+    print (label)
 
 def state_str(state_array):
     ''' DEBUG HELPER to convert a state_array value to a hex string '''
@@ -258,11 +258,29 @@ def gf_mult(bv, factor):
     GF(2^8).  param bv is an 8-bit BitVector, param factor is an integer.
         returns an 8-bit BitVector, whose value is bv*factor in GF(2^8) '''
     # ADD YOUR CODE HERE - SEE LEC SLIDES 33-36
-    binfac = bin(factor)[2:]
-    facbv = BitVector.BitVector( bitstring= binfac )
-    modbv = BitVector.BitVector( bitstring='100011011' )
-    remainder = bv.gf_multiply_modular(facbv, modbv, 8)
-    return remainder
+    add_coefs = []
+    bv_factor = BitVector.BitVector(size=8, intVal=factor)
+    bv_irreducible = BitVector.BitVector(size=9, intVal=0x11b)
+    # generate list of power-of-2 shifted bv values
+    for i in range(bv_factor.size):
+        if bv_factor[i] == 1:  # check if factor bit is a 1
+            bv_bitmul = BitVector.BitVector(size=8, intVal=bv.intValue())
+            bv_bitmul.pad_from_right(bv_factor.size-i-1)
+            add_coefs.append(bv_bitmul)
+    bv_mul = BitVector.BitVector(bitstring="")
+    # add up the list of partial-results
+    for i in range(len(add_coefs)):
+        bv_mul ^= add_coefs[i]
+    bv_gfmul = copy.deepcopy(bv_mul)
+    i = bv_gfmul.next_set_bit(0)
+    while (i+8 < bv_gfmul.size):
+        bv_gfmul[i:i+9] = (bv_gfmul[i:i+9] ^ bv_irreducible)
+        i = bv_gfmul.next_set_bit(0) 
+    bv_result = BitVector.BitVector(size=8)
+    bv_result = bv_gfmul[(bv_gfmul.size-8):bv_gfmul.size]
+    return bv_result
+
+
     
 
 def mix_columns(sa):
