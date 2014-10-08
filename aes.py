@@ -269,13 +269,14 @@ def gf_mult(bv, factor):
             add_coefs.append(bv_bitmul)
     bv_mul = BitVector.BitVector(bitstring="")
     # add up the list of partial-results
-    for i in range(len(add_coefs)):
+    for i in range(len(add_coefs)):              
         bv_mul ^= add_coefs[i]
     bv_gfmul = copy.deepcopy(bv_mul)
     i = bv_gfmul.next_set_bit(0)
-    while (i+8 < bv_gfmul.size):
-        bv_gfmul[i:i+9] = (bv_gfmul[i:i+9] ^ bv_irreducible)
-        i = bv_gfmul.next_set_bit(0) 
+    if i != -1:
+        while (i+8 < bv_gfmul.size):
+            bv_gfmul[i:i+9] = (bv_gfmul[i:i+9] ^ bv_irreducible)
+            i = bv_gfmul.next_set_bit(0) 
     bv_result = BitVector.BitVector(size=8)
     bv_result = bv_gfmul[(bv_gfmul.size-8):bv_gfmul.size]
     return bv_result
@@ -352,6 +353,5 @@ def decrypt(hex_key, hex_ciphertext):
         sa = inv_sub_bytes(sa)
     sa = add_round_key(sa,ks[0:4])
     return state_str(sa)
-
 
 
