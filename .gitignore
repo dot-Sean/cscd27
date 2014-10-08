@@ -1,4 +1,4 @@
 # Byte-compiled / optimized
 __pychache__/
 *.py[cod]
-
+.idea/
