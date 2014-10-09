@@ -9,6 +9,22 @@ class AES_tests(unittest.TestCase):
         self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword cf4f3c09 from FIPS-197\
                                                            appendix 2")
 
+        kw = aes.key_bv('6c76052a')
+        sub = aes.key_bv('50386be5')
+        self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword 6c76052a from FIPS-197\
+                                                           appendix 2")
+
+        kw = aes.key_bv('59f67f73')
+        sub = aes.key_bv('cb42d28f')
+        self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword 59f67f73 from FIPS-197\
+                                                           appendix 2")
+
+        kw = aes.key_bv('7a883b6d')
+        sub = aes.key_bv('dac4e23c')
+        self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword 7a883b6d from FIPS-197\
+                                                           appendix 2")
+
+
     def test_init_key_schedule(self):
         ntk='2b7e151628aed2a6abf7158809cf4f3c'
         q = aes.init_key_schedule(aes.key_bv(ntk))
@@ -19,13 +35,21 @@ class AES_tests(unittest.TestCase):
                                                                  FIPS-197 appendix 2")
         self.assertEqual(aes.bv_hex_str(q[43]),'b6630ca6',"random testing elements of key schedule according to\
                                                                  FIPS-197 appendix 2")
+        self.assertEqual(aes.bv_hex_str(q[33]),'b58dbad2',"random testing elements of key schedule according to\
+                                                                 FIPS-197 appendix 2")
+
+
+
 
     def test_add_round_key(self):
         rk=[aes.key_bv('00010203'),aes.key_bv('04050607'),aes.key_bv('08090a0b'),\
             aes.key_bv('0c0d0e0f')]
+
         sa=aes.init_state_array(aes.key_bv('00112233445566778899aabbccddeeff'))
         self.assertEqual(aes.state_str(aes.add_round_key(sa,rk)),'00102030405060708090a0b0c0d0e0f0',\
             "Test add round key from FIPS-197 C.1 round[0]")
+
+
 
     def test_sbox_lookup(self):
         bv = aes.key_bv("ab")
