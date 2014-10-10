@@ -1,4 +1,6 @@
-
+#CSCD27 Assignment 1 
+#Eric Ren 999661575 reneric
+#Man Xu 
 import unittest
 import aes
 
