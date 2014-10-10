@@ -1,5 +1,9 @@
 #!/usr/bin/python #
 
+#CSCD27 Assignment 1
+#Eric Ren 999661575 reneric
+#Man Xu
+
 ''' Compiler/OS Used: cygwin Win7
     Sources Used: BitVector documentation, NIST AES-spec appendix for tests
 '''
