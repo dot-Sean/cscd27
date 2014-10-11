@@ -4,7 +4,8 @@
 #Eric Ren: 999661575 reneric
 #Man Xu: 999586755 xuman2
 
-''' Compiler/OS Used: cygwin Win7
+''' 
+    Compiler/OS Used: cygwin Win7
     Sources Used: BitVector documentation, NIST AES-spec appendix for tests
 '''
 
@@ -116,7 +117,8 @@ def key_bv(hex_key):
     keybytes = binascii.a2b_hex(hex_key)  # hex string to byte string
     key_bv = BitVector.BitVector(size = 0) # initialize BitVector
     for byte in keybytes: 
-        byte_bv = BitVector.BitVector(intVal=ord(byte), size=8) # one byte to add to BitVector
+        byte_bv = BitVector.BitVector(intVal=ord(byte), size=8) 
+        # one byte to add to BitVector
         key_bv += byte_bv # catenate new BitVector byte onto return value
     return key_bv
 
@@ -159,7 +161,8 @@ def init_key_schedule(kb):
     for i in range(4,(rounds+1)*4):
         temp = key_schedule[i-1]
         if (i % 4 == 0):
-            temp = (sub_key_bytes((temp.deep_copy() << 8)) ^ (BitVector.BitVector(intVal=rcon[i/4],size=32) << 24))
+            temp = (sub_key_bytes((temp.deep_copy() << 8)) ^ \
+                    (BitVector.BitVector(intVal=rcon[i/4],size=32) << 24))
         key_schedule.append(key_schedule[i-4] ^ temp)
 
     return key_schedule
