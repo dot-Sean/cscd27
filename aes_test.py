@@ -5,22 +5,25 @@ import unittest
 import aes
 
 class AES_tests(unittest.TestCase):
-    def test_sub_key_bytes(self):
+    def test_sub_key_bytes_0(self):
         kw = aes.key_bv('cf4f3c09')
         sub = aes.key_bv('8a84eb01')
         self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword cf4f3c09 from FIPS-197\
                                                            appendix 2")
 
+    def test_sub_key_bytes_1(self):
         kw = aes.key_bv('6c76052a')
         sub = aes.key_bv('50386be5')
         self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword 6c76052a from FIPS-197\
                                                            appendix 2")
 
+    def test_sub_key_bytes_2(self):
         kw = aes.key_bv('59f67f73')
         sub = aes.key_bv('cb42d28f')
         self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword 59f67f73 from FIPS-197\
                                                            appendix 2")
 
+    def test_sub_key_bytes_3(self):
         kw = aes.key_bv('7a883b6d')
         sub = aes.key_bv('dac4e23c')
         self.assertEqual(aes.sub_key_bytes(kw),sub,"test sub_key_bytes using keyword 7a883b6d from FIPS-197\
@@ -95,20 +98,22 @@ class AES_tests(unittest.TestCase):
         sa=aes.init_state_array(aes.key_bv('5f72641557f5bc92f7be3b291db9f91a'))
         self.assertEqual(aes.state_str(aes.inv_mix_columns(sa)),'6353e08c0960e104cd70b751bacad0e7',\
             "Test inv mix columns from FIPS-197 C.1 round[1]")
-    def test_encrypt(self):
+    def test_encrypt_0(self):
         ntk='2b7e151628aed2a6abf7158809cf4f3c'
         ntp='3243f6a8885a308d313198a2e0370734'
         ntc=aes.encrypt(ntk,ntp)
         self.assertEqual(ntc,'3925841d02dc09fbdc118597196a0b32',"sample encryption from FIPS-197 Appendix 2")
+    def test_encrypt_1(self):
         ntk='000102030405060708090a0b0c0d0e0f'
         ntp='00112233445566778899aabbccddeeff'
         ntc=aes.encrypt(ntk,ntp)
         self.assertEqual(ntc,'69c4e0d86a7b0430d8cdb78070b4c55a',"sample encryption from FIPS-197 Appendix C.1")
-    def test_decrypt(self):
+    def test_decrypt_0(self):
         ntk='2b7e151628aed2a6abf7158809cf4f3c'
         ntc='3925841d02dc09fbdc118597196a0b32'
         ntp=aes.decrypt(ntk,ntc)
         self.assertEqual(ntp,'3243f6a8885a308d313198a2e0370734',"sample decryption from FIPS-197 Appendix 2")
+    def test_decrypt_1(self):
         ntk='000102030405060708090a0b0c0d0e0f'
         ntc='69c4e0d86a7b0430d8cdb78070b4c55a'
         ntp=aes.decrypt(ntk,ntc)
